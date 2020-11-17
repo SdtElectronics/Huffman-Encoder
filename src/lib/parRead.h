@@ -4,7 +4,7 @@
 
 class parReader{	
 	public:
-		parReader(const std::string &&path);
+		parReader(const std::string& path);
 		std::string read(const size_t nThreads);
 		std::string  stRead();
 

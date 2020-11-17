@@ -15,7 +15,7 @@ class HFEnc{
 		using nodeItr = std::vector<HTNode>::iterator;
 		
 		inline void appendNode(double prob);
-		void build();
+		inline void build();
 		inline std::string trace(const HTNode& node) const;
 		inline void setNode(std::vector<nodeItr>::iterator& it, int val);
 

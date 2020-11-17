@@ -6,7 +6,7 @@
 #include <filesystem>
 #include "parRead.h"
 #include "utils.h"
-parReader::parReader(const std::string &&path): file_path(path){};
+parReader::parReader(const std::string& path): file_path(path){};
 
 std::string parReader::read(const size_t nThreads){	
 	size_t fSize = std::filesystem::file_size(std::filesystem::path(file_path));
