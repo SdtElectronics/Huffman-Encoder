@@ -4,7 +4,7 @@ class llogger{
     public:
         enum level: char{all = 0, verbose, message, warning, error, silent};
 
-        llogger(std::ostream &os, level lev);
+        llogger(std::ostream& os, level lev);
         template <typename T>
         llogger& operator << (const T &content);
         llogger& operator << (level content);

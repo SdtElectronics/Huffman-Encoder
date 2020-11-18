@@ -19,19 +19,9 @@ double HFEnc::HTNode::getProb() const{
 	return _prob;
 }
 
-bool HFEnc::HTNode::nodeItrCmp(const nodeItr &lhs, const nodeItr &rhs){
+bool HFEnc::HTNode::nodeItrCmp(const nodeItr& lhs, const nodeItr& rhs){
     return lhs->_prob < rhs->_prob;
 }
-
-HFEnc::HFEnc(const std::vector<double> &probs) : syms(probs.size()){
-    const size_t size = syms + syms - 1;
-    nodes.reserve(size);
-    nodeIts.reserve(size);
-
-    for (double prob : probs){
-        appendNode(prob);
-    }
-};
 
 void HFEnc::appendNode(double prob){	
 	nodes.push_back(HFEnc::HTNode(prob));
