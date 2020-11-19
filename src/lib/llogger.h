@@ -6,7 +6,7 @@ class llogger{
 
         llogger(std::ostream& os, level lev);
         template <typename T>
-        llogger& operator << (const T &content);
+        llogger& operator << (const T& content);
         llogger& operator << (level content);
 
     private : 

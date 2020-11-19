@@ -4,7 +4,6 @@
 #include <string>
 
 class HFEnc{
-
 	public:
         template <typename T>
         HFEnc(const T& prob);
@@ -44,14 +43,12 @@ class HFEnc::HTNode{
 };
 
 template <typename T>
-HFEnc::HFEnc(const T &probs) : syms(probs.size())
-{
+HFEnc::HFEnc(const T& probs) : syms(probs.size()){
     const size_t size = syms + syms - 1;
     nodes.reserve(size);
     nodeIts.reserve(size);
 
-    for (auto prob : probs)
-    {
+    for (auto prob : probs){
         appendNode(static_cast<double>(prob));
     }
 };
