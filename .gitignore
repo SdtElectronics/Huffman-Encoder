@@ -1,2 +1,4 @@
 .ccls-cache/
 src/lib/.ccls-cache/ 
+.vscode/
+src/lib/makestr
