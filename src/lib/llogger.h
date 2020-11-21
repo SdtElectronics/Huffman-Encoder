@@ -27,7 +27,7 @@
 
 class llogger{
     public:
-        enum level: char{all = 0, verbose, message, warning, error, silent};
+        enum level: char{all = 0, verbose, info, warning, error, silent};
 
         llogger(std::ostream& os, level lev);
         template <typename T>
