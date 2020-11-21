@@ -31,6 +31,7 @@
 #include <filesystem>
 #include "parRead.h"
 #include "utils.h"
+
 parReader::parReader(const std::string& path): file_path(path){};
 
 std::string parReader::read(const size_t nThreads){	
@@ -51,11 +52,13 @@ std::string parReader::read(const size_t nThreads){
 	return par;	
 }
 
-std::string parReader::stRead(){	
-	size_t fSize = std::filesystem::file_size(std::filesystem::path(file_path));
-	std::string ret(fSize + 1, '\0');
-	offsetRd(0, fSize, &ret[0]);
-	return ret;
+std::string parReader::stRead(std::optional<size_t> len, size_t offset){
+    size_t fSize = len.has_value() ? 
+                    len.value()    :
+                    std::filesystem::file_size(std::filesystem::path(file_path));
+    std::string ret(fSize + 1, '\0');
+    offsetRd(offset, fSize, &ret[0]);
+    return ret;
 }
 
 void parReader::offsetRd(size_t offset, size_t len, char* dst){	

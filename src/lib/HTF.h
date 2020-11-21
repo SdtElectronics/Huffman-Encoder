@@ -32,8 +32,8 @@ class HFEnc{
 
 class HFEnc::HTNode{	
 	public:
-		HTNode(double prob, int val);
-		//bool operator < (const HTNode&& rhs);
+        HTNode(double prob, int val = 0);
+        //bool operator < (const HTNode&& rhs);
 		//operator int() ;
 		inline int getVal() const;
 		inline double getProb() const;

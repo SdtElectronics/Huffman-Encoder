@@ -25,15 +25,15 @@
 
 #include <string>
 #include <vector>
-
+#include <optional>
 
 class parReader{	
 	public:
 		parReader(const std::string& path);
 		std::string read(const size_t nThreads);
-		std::string  stRead();
+        std::string stRead(std::optional<size_t> len = std::nullopt, size_t offset = 0);
 
-		const std::string file_path;
+        const std::string file_path;
 	private:
 		void offsetRd(size_t offset, size_t len, char* dst);
 };

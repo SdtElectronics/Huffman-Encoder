@@ -25,16 +25,18 @@
 
 #include <thread>
 #include <iostream>
+#include "cmdline/cmdline.h"
 #include "parRead.h"
 #include "parWdCnt.h"
 #include "HTF.h"
 #include "llogger.h"
+#include "version.h"
 
 parReader rd("./sc.fex");
 
 int main(int argc, char* argv[]){	
 	int nThreads = std::thread::hardware_concurrency();
-	const std::string& ve = rd.read(nThreads);
+	const std::string& ve = rd.stRead();
 	/*
 	for(auto str:ve){	
 		std::cout<<str<<std::endl;

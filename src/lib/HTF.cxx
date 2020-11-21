@@ -9,7 +9,7 @@
 
 #include "HTF.h"
 
-HFEnc::HTNode::HTNode(double prob, int val = 0): _val(val), _prob(prob){};
+HFEnc::HTNode::HTNode(double prob, int val): _val(val), _prob(prob){};
 
 /*
 HFEnc::HTNode HFEnc::HTNode::getParent(){	
