@@ -1,6 +1,5 @@
 CPP=g++
-CFLAGS=-std=c++11 -Wall -I. -IDeviceHandlers -fopenmp -std=c++17 -lstdc++
-#CFLAGS=-std=c++11 -g3 -Wall -I. -IDeviceHandlers 
+CFLAGS=-Wall -I. -fopenmp -std=c++17 -lstdc++
 OUT=HuffmanEncoder
 OUTDIR=../out
 OBJDIR=../out/obj
