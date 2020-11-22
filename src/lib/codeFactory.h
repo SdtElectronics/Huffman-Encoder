@@ -11,7 +11,7 @@ template <typename T>
 class codeFactory{
     public:
         template <typename C>
-        codeFactory(const C &probs);
+        codeFactory(const C& probs);
 
         std::vector<std::string> codeGen();
         std::vector<char> alphabetGen();
