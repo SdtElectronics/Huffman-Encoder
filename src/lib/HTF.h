@@ -47,7 +47,7 @@ class HFEnc::HTNode{
 		double _prob;
 		int _val;
 };
-
+ 
 template <typename T>
 HFEnc::HFEnc(const T& probs): syms(probs.size()){
     const size_t size = syms + syms - 1;
