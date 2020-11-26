@@ -2,31 +2,28 @@
 #include <array>
 #include <vector>
 
-template<size_t nodeDeg>
 class HTNode{
     public:
         HTNode(bool notLeaf);
-        std::array<size_t, nodeDeg> childIndices;
+        std::array<size_t, 2> childIndices;
 
-        bool notLeaf();
+        bool notLeaf() const;
 
     private:
         
         bool _notLeaf;
 };
 
-template<size_t degree>
 class HFDec{
     public:
         using bsItr = std::vector<bool>::iterator;
 
-        HFDec(const std::vector<HTNode<degree> >& nodes);
+        HFDec(const std::vector<HTNode>& nodes);
         
         size_t getSym(bsItr& it) const;
-        std::vector<size_t> getSyms(const bsItr begin, const bsItr end) const;
+        //std::vector<size_t> getSyms(const bsItr begin, const bsItr end) const;
 
     private:
 
-
-        std::vector<HTNode<degree> > _nodes;
+        std::vector<HTNode> _nodes;
 };

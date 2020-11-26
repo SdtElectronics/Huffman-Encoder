@@ -1,15 +1,13 @@
 #include "HFD.h"
 
-template <size_t degree>
-HFDec<degree>::HFDec(const std::vector<HTNode<degree> >& nodes): _nodes(nodes){};
+HFDec::HFDec(const std::vector<HTNode>& nodes): _nodes(nodes){};
 
-template <size_t degree>
-size_t HFDec<degree>::getSym(bsItr& it) const{
-    HTNode& node = _nodes.back();
-    size_t nextInd = node.childIndices[*it];
-    while(node.notLeaf()){
-        node = _nodes[nextInd];
-        nextInd = node.childIndices[*(++it)];
+size_t HFDec::getSym(bsItr& it) const{
+    auto nodeItr = _nodes.end() - 1;
+    size_t nextInd = nodeItr->childIndices[*it];
+    while(nodeItr->notLeaf()){
+        nodeItr = _nodes.begin() + nextInd;
+        nextInd = nodeItr->childIndices[*(++it)];
     }
     return nextInd;
 }
