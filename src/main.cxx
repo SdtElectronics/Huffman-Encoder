@@ -34,9 +34,22 @@
 
 parReader rd("./sc.fex");
 
-int main(int argc, char* argv[]){	
-	int nThreads = std::thread::hardware_concurrency();
-	const std::string& ve = rd.stRead();
+cmdline::parser cmd;
+
+int main(int argc, char* argv[]){
+    // add specified type of variable.
+    // 1st argument is long name
+    // 2nd argument is short name (no short name if '\0' specified)
+    // 3rd argument is description
+    // 4th argument is mandatory (optional. default is false)
+    // 5th argument is default value  (optional. it used when mandatory is false)
+    cmd.add<std::string>("input", 'I', "input file", false, "");
+    cmd.add<int>("verbose", 'v', "log level", false, 3, cmdline::range(0, 4));
+
+    llogger logger(std::cout, static_cast<llogger::level>(cmd.get<int>("verbose")));
+
+    int nThreads = std::thread::hardware_concurrency();
+    const std::string& ve = rd.stRead();
 	/*
 	for(auto str:ve){	
 		std::cout<<str<<std::endl;

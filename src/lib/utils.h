@@ -22,7 +22,7 @@
   OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-
+#pragma once
 #include <utility>
 
 inline std::pair<size_t, size_t> taskDiv(size_t nThreads, size_t taskSize){	

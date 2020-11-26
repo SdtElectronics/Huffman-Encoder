@@ -4,9 +4,7 @@
   Unauthorized copying of this file, via any medium is strictly prohibited.
 */
 
-#include <algorithm>
 #include <sstream>
-
 #include "HTF.h"
 
 HFEnc::HTNode::HTNode(double prob, int val): _val(val), _prob(prob){};

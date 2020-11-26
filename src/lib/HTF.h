@@ -3,17 +3,21 @@
   All Rights Reserved.
   Unauthorized copying of this file, via any medium is strictly prohibited.
 */
-
+#pragma once
+#include <algorithm>
 #include <utility>
+#include <string>
 #include <vector>
 #include <map>
-#include <string>
 
 class HFEnc{
 	public:
         template <typename T>
         HFEnc(const T& prob);
         std::vector<std::string> operator() ();
+
+        template <typename T>
+        void forEach(T cb) const;
 	
 	private:
 		class HTNode;
@@ -57,4 +61,13 @@ HFEnc::HFEnc(const T& probs): syms(probs.size()){
     for (auto prob : probs){
         appendNode(static_cast<double>(prob));
     }
-};
+}
+
+template <typename T>
+void HFEnc::forEach(T cb) const{
+    size_t ind = 0;
+    auto beg = nodes.begin();
+    for(HFEnc::HTNode node: nodes){
+        T(i++, std::distance(beg, node._parent));
+    }
+}
