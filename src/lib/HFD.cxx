@@ -1,6 +1,12 @@
 #include "HFD.h"
 
-HFDec::HFDec(const std::vector<HTNode>& nodes): _nodes(nodes){};
+HTNode::HTNode(bool notLeaf): _notLeaf(notLeaf){};
+
+bool HTNode::notLeaf() const{
+    return _notLeaf;
+}
+
+HFDec::HFDec(const std::vector<HTNode> &nodes) : _nodes(nodes){};
 
 size_t HFDec::getSym(bsItr& it) const{
     auto nodeItr = _nodes.end() - 1;

@@ -32,7 +32,7 @@
 #include "llogger.h"
 #include "version.h"
 
-parReader rd("./sc.fex");
+
 
 cmdline::parser cmd;
 
@@ -43,9 +43,10 @@ int main(int argc, char* argv[]){
     // 3rd argument is description
     // 4th argument is mandatory (optional. default is false)
     // 5th argument is default value  (optional. it used when mandatory is false)
-    cmd.add<std::string>("input", 'I', "input file", false, "");
+    cmd.add<std::string>("input", 'I', "input file", true);
     cmd.add<int>("verbose", 'v', "log level", false, 3, cmdline::range(0, 4));
 
+    parReader rd(cmd.get<std::string>("input"));
     llogger logger(std::cout, static_cast<llogger::level>(cmd.get<int>("verbose")));
 
     int nThreads = std::thread::hardware_concurrency();

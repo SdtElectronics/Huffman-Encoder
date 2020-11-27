@@ -24,9 +24,22 @@
 */
 #pragma once
 #include <utility>
+#include <string>
+#include <vector>
+#include <regex>
 
 inline std::pair<size_t, size_t> taskDiv(size_t nThreads, size_t taskSize){	
 	size_t lastChunkSize = taskSize%nThreads;
 	size_t chunkSize = (taskSize - lastChunkSize)/nThreads;
 	return std::pair<size_t, size_t>(chunkSize, lastChunkSize + chunkSize);
+}
+
+inline std::vector<std::string> split(const std::string& in, std::string re){
+    std::regex ws_re(re);
+    return std::vector<std::string> (
+        std::sregex_token_iterator(
+            in.begin(), in.end(), ws_re, -1
+        ), 
+        std::sregex_token_iterator()
+    );
 }
