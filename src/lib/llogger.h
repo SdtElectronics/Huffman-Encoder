@@ -39,3 +39,12 @@ class llogger{
         level _level;
         level curLev;
 };
+
+
+template <typename T>
+llogger& llogger::operator << (const T& content){
+    if (curLev >= _level){
+        _os << content;
+    }
+    return *this;
+}

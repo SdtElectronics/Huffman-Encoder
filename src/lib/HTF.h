@@ -68,6 +68,7 @@ void HFEnc::forEach(T cb) const{
     size_t ind = 0;
     auto beg = nodes.begin();
     for(HFEnc::HTNode node: nodes){
-        T(node.getVal(), ind++, std::distance(beg, node._parent));
+        T(node.getVal(), ind++, std::distance(beg, 
+                                              std::vector<HTNode>::const_iterator(node._parent)));
     }
 }

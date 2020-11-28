@@ -53,7 +53,7 @@ std::string HFEnc::trace(const HTNode& node) const{
 	nodeItr it = node._parent;
 	std::stringstream code;
 	code << node.getVal();
-	while(it != nodes.end() - 1){	
+	while(it != nodes.cend() - 1){	
 		code << it->getVal();
 		it = it->_parent;
 	}

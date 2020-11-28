@@ -7,6 +7,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <array>
 
 template <typename T>
 class codeFactory{
@@ -14,10 +15,14 @@ class codeFactory{
         template <typename C>
         codeFactory(const C& probs);
 
+        template <typename C>
+        codeFactory(const C& probs, std::vector<std::array<char, 2> > filter);
+
         std::vector<std::string> codeGen();
         std::vector<char> alphabetGen();
 
     private:
+        static std::vector<char> buildAlphabet(char beg, char end);
         std::vector<double> _probs;
         std::vector<std::string> codes;
         std::vector<char> chars;

@@ -12,7 +12,7 @@ class parWdCounter{
 	public:
 		parWdCounter(const std::string& input);
 		
-		std::array<size_t, 256> operator () (size_t nThreads);
+		std::array<size_t, 256> operator () ();
 	private:
 		const std::string& in;
 		//std::vector<std::array<size_t, 256>> slots;
