@@ -23,7 +23,10 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <functional>
+#include <string>
 #include "llogger.h"
+#include <stdio.h>
 
 llogger::llogger(std::ostream& os, level lev): _os(os), _level(lev){};
 

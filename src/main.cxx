@@ -35,14 +35,6 @@
 #include "utils.h"
 #include "version.h"
 
-template class codeFactory<HFEnc>;
-template codeFactory<HFEnc>::codeFactory<std::array<double, 256>>(const std::array<double, 256> &probs);
-template codeFactory<HFEnc>::codeFactory<std::array<double, 256>>(const std::array<double, 256> &probs,
-                                                                  std::vector<std::array<char, 2>> filter);
-template std::vector<std::string> codeFactory<HFEnc>::codeGen();
-template std::vector<char> codeFactory<HFEnc>::alphabetGen();
-template std::vector<char> codeFactory<HFEnc>::buildAlphabet(char beg, char end);
-
 cmdline::parser cmd;
 
 int main(int argc, char* argv[]){
@@ -79,9 +71,9 @@ int main(int argc, char* argv[]){
 	//	std::cout<<static_cast<char>(j)<<':'<<ret[j]<<std::endl;
 	}
 
-    codeFactory<HFEnc> cf(cCnt, cfFilt);
+    codeFactory cf(cCnt, cfFilt);
 
-    class std::vector<std::string> codes = cf.codeGen();
+    class std::vector<std::string> codes = cf.codeGen<HFEnc>();
     class std::vector<char> alphabet = cf.alphabetGen();
     for (size_t j = 96; j != 122; ++j){
         std::cout << static_cast<char>(j) << ':' << codes[j] << std::endl;

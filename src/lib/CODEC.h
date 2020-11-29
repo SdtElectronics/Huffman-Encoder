@@ -10,13 +10,13 @@
 
 class encoder{
     public:
-        encoder(const std::vector<char> &syms, const std::vector<double> &probs);
+        encoder(const std::vector<char>& syms, const std::vector<double>& probs);
         //void genDict();
         void writeDict(std::ostream os);
 
     private:
 
-        std::stringstream _syms;
+        std::string _syms;
         std::vector<int> zeroSeq;
         std::vector<int> oneSeq;
 };

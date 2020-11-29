@@ -27,6 +27,7 @@
 
 class llogger{
     public:
+
         enum level: char{all = 0, verbose, info, warning, error, silent};
 
         llogger(std::ostream& os, level lev);
@@ -34,17 +35,39 @@ class llogger{
         llogger& operator << (const T& content);
         llogger& operator << (level content);
 
-    private : 
-        std::ostream &_os;
+    private :
+        template <typename T>
+        void opImpl(const T &content, std::true_type tp);
+        template <typename T>
+        void opImpl(const T &content, std::false_type tp);
+        std::ostream& _os;
         level _level;
         level curLev;
 };
 
+template <typename T, typename = void>
+struct is_callable : public std::false_type {};
+
+template <typename T>
+struct is_callable<
+    T,
+    std::enable_if_t<!std::is_same_v<void, std::result_of_t<T()>>>>
+    : public std::true_type {};
+
+template <typename T>
+void llogger::opImpl(const T& content, std::true_type tp){
+    _os << content();
+}
+
+template <typename T>
+void llogger::opImpl(const T& content, std::false_type tp){
+    _os << content;
+}
 
 template <typename T>
 llogger& llogger::operator << (const T& content){
     if (curLev >= _level){
-        _os << content;
+        opImpl(content, is_callable<T>());
     }
     return *this;
 }

@@ -9,7 +9,6 @@
 #include <vector>
 #include <array>
 
-template <typename T>
 class codeFactory{
     public:
         template <typename C>
@@ -18,6 +17,7 @@ class codeFactory{
         template <typename C>
         codeFactory(const C& probs, std::vector<std::array<char, 2> > filter);
 
+        template <typename T>
         std::vector<std::string> codeGen();
         std::vector<char> alphabetGen();
 
@@ -27,3 +27,37 @@ class codeFactory{
         std::vector<std::string> codes;
         std::vector<char> chars;
 };
+
+template <typename C>
+codeFactory::codeFactory(const C& probs){
+    char cur = 0;
+    chars.reserve(probs.size());
+    _probs.reserve(probs.size());
+    for (auto prob: probs){
+        if(prob != 0){
+            chars.push_back(cur);
+            _probs.push_back(static_cast<double>(prob));
+        }
+        ++cur;
+    }
+}
+
+
+template <typename C>
+codeFactory::codeFactory(const C& probs, std::vector<std::array<char, 2> > filters){
+    chars.reserve(probs.size());
+    _probs.reserve(probs.size());
+    for(auto filter: filters){
+        _probs.insert(_probs.cend(), 
+                      (probs.begin() + static_cast<size_t>(filter[0])),
+                      (probs.begin() + static_cast<size_t>(filter[1] + 1)));
+        std::vector<char> alphabet = buildAlphabet(filter[0], filter[1] + 1);
+        chars.insert(chars.cend(), alphabet.cbegin(), alphabet.cend());
+    }
+}
+
+template <typename T>
+std::vector<std::string> codeFactory::codeGen(){
+    T encoder(_probs);
+    return encoder();
+}

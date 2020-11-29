@@ -4,9 +4,7 @@
 encoder::encoder(const std::vector<char>& syms, 
                  const std::vector<double>& probs): zeroSeq(syms.size()*2 - 1),
                                                     oneSeq(syms.size()*2 - 1){
-    for(char sym: syms){
-        _syms << sym;
-    }
+    _syms = std::string(syms.begin(), syms.end());
     //_syms.seekp(-1, std::ios_base::end);
     HFEnc enc(probs);
     auto cb = [this](int val, size_t selfInd, size_t parentInd){
@@ -58,18 +56,15 @@ std::vector<HTNode> decoder::nodesFactory(size_t symc,
     nodes.reserve(symc + symc - 1);
     size_t ind = 0;
 
-    for (char i : zeroSeq)
-    {
+    for (char i: zeroSeq){
         bool isLeaf = ind < symc;
         nodes.push_back(HTNode(!isLeaf));
         HTNode &last = nodes.back();
-        if (isLeaf)
-        {
+        if (isLeaf){
             last.childIndices[0] = ind;
             last.childIndices[1] = ind;
         }
-        else
-        {
+        else{
             last.childIndices[0] = i - '0';
             last.childIndices[1] = oneSeq[ind] - '0';
         }
