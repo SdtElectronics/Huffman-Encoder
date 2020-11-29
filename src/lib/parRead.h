@@ -31,7 +31,7 @@ class parReader{
 	public:
 		parReader(const std::string& path);
 		std::string read(const size_t nThreads);
-        std::string stRead(std::optional<size_t> len = std::nullopt, size_t offset = 0);
+        std::string stRead(std::optional<size_t> len = std::optional<size_t>(), size_t offset = 0);
 
         const std::string file_path;
 	private:

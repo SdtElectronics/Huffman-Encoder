@@ -20,7 +20,8 @@ class codeFactory{
         template <typename T>
         std::vector<std::string> codeGen();
         std::vector<char> alphabetGen();
-
+        std::vector<double> getProbs();
+        
     private:
         static std::vector<char> buildAlphabet(char beg, char end);
         std::vector<double> _probs;

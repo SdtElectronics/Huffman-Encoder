@@ -53,9 +53,7 @@ std::string parReader::read(const size_t nThreads){
 }
 
 std::string parReader::stRead(std::optional<size_t> len, size_t offset){
-    size_t fSize = len.has_value() ? 
-                    len.value()    :
-                    std::filesystem::file_size(std::filesystem::path(file_path));
+    size_t fSize = len.value_or(std::filesystem::file_size(std::filesystem::path(file_path)));
     std::string ret(fSize + 1, '\0');
     offsetRd(offset, fSize, &ret[0]);
     return ret;

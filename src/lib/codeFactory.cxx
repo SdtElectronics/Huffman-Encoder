@@ -22,3 +22,7 @@ std::vector<char> codeFactory::buildAlphabet(char beg, char end){
     }
     return ret;
 }
+
+std::vector<double> codeFactory::getProbs(){
+    return _probs;
+}

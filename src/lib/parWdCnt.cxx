@@ -22,7 +22,7 @@ std::array<size_t, 256> parWdCounter::wdCnt(const std::string &input) const{
 
 std::array<size_t, 256> parWdCounter::operator () (){	
 	//omp_set_num_threads(nThreads);
-	std::array<size_t, 256> ret;
+	std::array<size_t, 256> ret{};
 	
 	//#pragma omp parallel for
 	for (size_t ind = 0; ind < in.length(); ++ind){

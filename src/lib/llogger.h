@@ -28,7 +28,7 @@
 class llogger{
     public:
 
-        enum level: char{all = 0, verbose, info, warning, error, silent};
+        enum level: char{silent = 0, error, warning, info, verbose, all};
 
         llogger(std::ostream& os, level lev);
         template <typename T>
@@ -67,7 +67,7 @@ void llogger::opImpl(const T& content, std::false_type tp){
 
 template <typename T>
 llogger& llogger::operator << (const T& content){
-    if (curLev >= _level){
+    if (curLev <= _level){
         opImpl(content, is_callable<T>());
     }
     return *this;

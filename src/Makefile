@@ -1,5 +1,5 @@
 CPP=g++
-CFLAGS=-Wall -I. -fopenmp -std=c++17 -lstdc++
+CFLAGS=-Wall -I. -fopenmp -std=c++17 -lstdc++ -O5
 OUT=HuffmanEncoder
 OUTDIR=../out
 OBJDIR=../out/obj
@@ -9,7 +9,7 @@ _OBJ=$(LIB)HTF.cxx $(LIB)llogger.cxx $(LIB)parRead.cxx $(LIB)parWdCnt.cxx main.o
 
 OBJ=$(patsubst %,$(OBJDIR)/%,$(_OBJ))
 
-INC=$(LIB)HTF.h $(LIB)llogger.h $(LIB)parRead.h $(LIB)parWdCnt.h $(LIB)utils.h version.h\
+INC=$(LIB)HTF.h $(LIB)llogger.h $(LIB)parRead.h $(LIB)parWdCnt.h $(LIB)utils.h $(LIB)cmdline/cmdline.h version.h
 
 all: credirs build
 

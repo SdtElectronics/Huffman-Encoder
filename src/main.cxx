@@ -26,6 +26,7 @@
 #include <array>
 #include <thread>
 #include <iostream>
+#include <sstream>
 #include "cmdline/cmdline.h"
 #include "parRead.h"
 #include "parWdCnt.h"
@@ -44,10 +45,11 @@ int main(int argc, char* argv[]){
     // 3rd argument is description
     // 4th argument is mandatory (optional. default is false)
     // 5th argument is default value  (optional. it used when mandatory is false)
-    cmd.add<std::string>("input", 'I', "input file", true);
+    cmd.add<std::string>("input", 'i', "input file", true);
     cmd.add<int>("verbose", 'v', "log level", false, 3, cmdline::range(0, 4));
     //cmd.add<std::string>("filter", 'f', "character filter", false, "\0,\177");
     cmd.add<std::string>("filter", 'f', "character filter", false, "a,z; , ;A,Z");
+	cmd.parse_check(argc, argv);
 
     parReader rd(cmd.get<std::string>("input"));
     llogger logger(std::cout, static_cast<llogger::level>(cmd.get<int>("verbose")));
@@ -59,23 +61,45 @@ int main(int argc, char* argv[]){
         cfFilt.push_back(std::array<char, 2>{filter[0], filter[2]});
     }
     
-    const std::string& ve = rd.stRead();
+    const std::string& fileStr = rd.stRead();
 	/*
-	for(auto str:ve){	
-		std::cout<<str<<std::endl;
+	for(auto str:fileStr){	
+		std::cout<<str;
+	}
+	std::cout << std::endl;
+	*/
+	const std::array<size_t, 256>& cCnt = parWdCounter(fileStr)();
+	/*
+	for(size_t j = 96; j != 122; ++j){	
+		std::cout<<static_cast<char>(j)<<':'<< cCnt[j]<<std::endl;
 	}
 	*/
-	std::array<size_t, 256>&& cCnt = parWdCounter(ve)();
-
-	for(size_t j = 96; j != 122; ++j){	
-	//	std::cout<<static_cast<char>(j)<<':'<<ret[j]<<std::endl;
-	}
-
     codeFactory cf(cCnt, cfFilt);
 
-    class std::vector<std::string> codes = cf.codeGen<HFEnc>();
-    class std::vector<char> alphabet = cf.alphabetGen();
-    for (size_t j = 96; j != 122; ++j){
-        std::cout << static_cast<char>(j) << ':' << codes[j] << std::endl;
-    }
+    logger<<llogger::level::verbose<<[&cf](){
+        std::vector<char> alphabet = cf.alphabetGen();
+        std::vector<double> probs = cf.getProbs();
+        std::stringstream logs;
+        logs<<"========Character count========\n";
+        size_t ind = 0;
+        for(char sym: alphabet){
+            logs<<sym<<' '<<probs[ind++]<<'\n';
+        }
+		logs<<'\n';
+        return logs.str();
+    };
+
+    std::vector<std::string> codes = cf.codeGen<HFEnc>();
+
+    logger<<llogger::level::info<<[&cf, codes](){
+        std::vector<char> alphabet = cf.alphabetGen();
+        std::stringstream logs;
+        logs<<"========Character encoding========\n";
+        size_t ind = 0;
+        for(char sym: alphabet){
+            logs<<sym<<' '<<codes[ind++]<<'\n';
+        }
+		logs << '\n';
+        return logs.str();
+    };
 }

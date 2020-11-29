@@ -36,7 +36,7 @@
 #include <typeinfo>
 #include <cstring>
 #include <algorithm>
-#ifdef __GNUC__
+#ifndef _MSC_VER
 #include <cxxabi.h>
 #endif
 #include <cstdlib>
@@ -53,7 +53,7 @@ public:
     std::stringstream ss;
     if (!(ss<<arg && ss>>ret && ss.eof()))
       throw std::bad_cast();
-    
+
     return ret;
   }
 };
@@ -63,7 +63,7 @@ class lexical_cast_t<Target, Source, true>{
 public:
   static Target cast(const Source &arg){
     return arg;
-  }  
+  }
 };
 
 template <typename Source>
@@ -104,20 +104,21 @@ Target lexical_cast(const Source &arg)
   return lexical_cast_t<Target, Source, detail::is_same<Target, Source>::value>::cast(arg);
 }
 
+#ifndef _MSC_VER
 static inline std::string demangle(const std::string &name)
 {
-  #ifdef _MSC_VER
   int status=0;
-  return name;
-  #elif defined(__GNUC__)
   char *p=abi::__cxa_demangle(name.c_str(), 0, 0, &status);
   std::string ret(p);
   free(p);
   return ret;
-  #else
-  #error unexpected c complier (msc/gcc), Need to implement this method for demangle
-  #endif
 }
+#else
+static inline std::string demangle(const std::string &name)
+{
+  return name;
+}
+#endif
 
 template <class T>
 std::string readable_typename()
@@ -568,7 +569,7 @@ public:
       if (ordered[i]->must())
         oss<<ordered[i]->short_description()<<" ";
     }
-    
+
     oss<<"[options] ... "<<ftr<<std::endl;
     oss<<"options:"<<std::endl;
 
