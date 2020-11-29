@@ -41,6 +41,7 @@ std::string parReader::read(const size_t nThreads){
 	auto lastChunkSize = rr.second;
 	
 	std::string par(fSize+1, '\0');
+    /*
 	omp_set_num_threads(nThreads);
 	#pragma omp parallel 
 	{	
@@ -50,6 +51,7 @@ std::string parReader::read(const size_t nThreads){
 		offsetRd(pos, readLen, &par[0] + tid*chunkSize);
 	}
 	return par;	
+    */
 }
 
 std::string parReader::stRead(std::optional<size_t> len, size_t offset){
