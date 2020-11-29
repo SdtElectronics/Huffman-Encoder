@@ -46,12 +46,13 @@ class llogger{
 };
 
 template <typename T, typename = void>
-struct is_callable : public std::false_type {};
+struct is_callable : public std::false_type {
+};
 
 template <typename T>
 struct is_callable<
     T,
-    std::enable_if_t<!std::is_same_v<void, std::result_of_t<T()>>>>
+    std::enable_if_t<!std::is_same_v<void, std::invoke_result_t<T()>>>>
     : public std::true_type {};
 
 template <typename T>

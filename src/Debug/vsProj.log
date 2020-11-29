@@ -1,4 +1,10 @@
 ﻿  codeFactory.cxx
+  HTF.cxx
+  llogger.cxx
+  parRead.cxx
+e:\documents\projects\infoth\src\lib\parread.cxx(38): warning C4244: “初始化”: 从“uintmax_t”转换到“size_t”，可能丢失数据
+e:\documents\projects\infoth\src\lib\parread.cxx(56): warning C4244: “初始化”: 从“uintmax_t”转换到“size_t”，可能丢失数据
+  parWdCnt.cxx
   main.cxx
   正在生成代码...
   vsProj.vcxproj -> E:\documents\projects\infoTh\src\Debug\vsProj.exe
