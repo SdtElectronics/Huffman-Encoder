@@ -26,7 +26,6 @@
 #include <functional>
 #include <string>
 #include "llogger.h"
-#include <stdio.h>
 
 llogger::llogger(std::ostream& os, level lev): _os(os), _level(lev){};
 

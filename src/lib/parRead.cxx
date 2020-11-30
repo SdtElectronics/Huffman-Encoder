@@ -50,8 +50,9 @@ std::string parReader::read(const size_t nThreads){
 		size_t &readLen = (tid == nThreads - 1)?lastChunkSize:chunkSize;
 		offsetRd(pos, readLen, &par[0] + tid*chunkSize);
 	}
-	return par;	
     */
+    return par;	
+    
 }
 
 std::string parReader::stRead(std::optional<size_t> len, size_t offset){

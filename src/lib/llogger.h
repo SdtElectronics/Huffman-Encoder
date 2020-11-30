@@ -35,7 +35,7 @@ class llogger{
         llogger& operator << (const T& content);
         llogger& operator << (level content);
 
-    private :
+    private:
         template <typename T>
         void opImpl(const T &content, std::true_type tp);
         template <typename T>

@@ -6,6 +6,7 @@
 
 #include <array>
 #include <algorithm>
+#include <sstream>
 #include "codeFactory.h"
 #include "HTF.h"
 
@@ -14,10 +15,10 @@ std::vector<char> codeFactory::alphabetGen(){
 }
 
 
-std::vector<char> codeFactory::buildAlphabet(char beg, char end){
+std::vector<char> codeFactory::buildAlphabet(unsigned char beg, unsigned char end){
     std::vector<char> ret;
     ret.reserve(end - beg);
-    for(char i = beg; i != end; ++i){
+    for(unsigned char i = beg; i != end; ++i){
         ret.push_back(i);
     }
     return ret;
@@ -25,4 +26,12 @@ std::vector<char> codeFactory::buildAlphabet(char beg, char end){
 
 std::vector<double> codeFactory::getProbs(){
     return _probs;
+}
+
+std::string codeFactory::printCode(const std::vector<bool>& code){
+    std::stringstream pCode;
+    for(bool bit: code){
+        pCode<<bit;
+    }
+    return pCode.str();
 }

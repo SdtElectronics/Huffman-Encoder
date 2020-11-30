@@ -46,25 +46,26 @@ void HFEnc::build(){
 		setNode(beg, 0);
 		setNode(beg, 1);
 	}
+    nodes.back()._parent = nodes.end() - 1;
 }
 
 //TODO: decouple code generation from trace
-std::string HFEnc::trace(const HTNode& node) const{	
+std::vector<bool> HFEnc::trace(const HTNode& node) const{	
 	nodeItr it = node._parent;
-	std::stringstream code;
-	code << node.getVal();
+    std::vector<bool> code;
+    code.push_back(node.getVal());
 	while(it != nodes.cend() - 1){	
-		code << it->getVal();
+		code.push_back(it->getVal());
 		it = it->_parent;
-	}
-	std::string tmp = code.str();
-	return std::string(tmp.rbegin(), tmp.rend());
+    }
+
+    return std::vector<bool>(code.rbegin(), code.rend());
 }
 
-std::vector<std::string> HFEnc::operator() (){	
+std::vector<std::vector<bool> > HFEnc::operator() (){	
 	build();
-	std::vector<std::string> ret;
-	ret.reserve(syms);
+    std::vector<std::vector<bool>> ret;
+    ret.reserve(syms);
 	for(size_t i = 0; i != syms; ++i){	
 		ret.push_back(trace(nodes[i]));
 	}

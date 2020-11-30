@@ -14,7 +14,7 @@ class HFEnc{
 	public:
         template <typename T>
         HFEnc(const T& prob);
-        std::vector<std::string> operator() ();
+        std::vector<std::vector<bool> > operator()();
 
         template <typename T>
         void forEach(T cb) const;
@@ -26,7 +26,7 @@ class HFEnc{
 		
 		inline void appendNode(double prob);
 		inline void build();
-		inline std::string trace(const HTNode& node) const;
+		inline std::vector<bool> trace(const HTNode& node) const;
 		inline void setNode(std::vector<nodeItr>::iterator& it, int val);
 
 		std::vector<HTNode> nodes;
@@ -67,8 +67,8 @@ template <typename T>
 void HFEnc::forEach(T cb) const{
     size_t ind = 0;
     auto beg = nodes.begin();
-    for(HFEnc::HTNode node: nodes){
-        T(node.getVal(), ind++, std::distance(beg, 
-                                              std::vector<HTNode>::const_iterator(node._parent)));
+    auto ter = nodes.end() - 1;
+    for(auto it = beg; it != ter; ++it){
+        cb(it->getVal(), ind++, std::vector<HTNode>::const_iterator(it->_parent) - beg);
     }
 }

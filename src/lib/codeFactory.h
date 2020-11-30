@@ -15,15 +15,16 @@ class codeFactory{
         codeFactory(const C& probs);
 
         template <typename C>
-        codeFactory(const C& probs, std::vector<std::array<char, 2> > filter);
+        codeFactory(const C& probs, const std::vector<std::array<char, 2> >& filter);
 
         template <typename T>
-        std::vector<std::string> codeGen();
+        std::vector<std::vector<bool> > codeGen();
         std::vector<char> alphabetGen();
         std::vector<double> getProbs();
-        
+        static std::string printCode(const std::vector<bool>& code);
+        static std::vector<char> buildAlphabet(unsigned char beg, unsigned char end);
+
     private:
-        static std::vector<char> buildAlphabet(char beg, char end);
         std::vector<double> _probs;
         std::vector<std::string> codes;
         std::vector<char> chars;
@@ -45,7 +46,7 @@ codeFactory::codeFactory(const C& probs){
 
 
 template <typename C>
-codeFactory::codeFactory(const C& probs, std::vector<std::array<char, 2> > filters){
+codeFactory::codeFactory(const C& probs, const std::vector<std::array<char, 2> >& filters){
     chars.reserve(probs.size());
     _probs.reserve(probs.size());
     for(auto filter: filters){
@@ -58,7 +59,7 @@ codeFactory::codeFactory(const C& probs, std::vector<std::array<char, 2> > filte
 }
 
 template <typename T>
-std::vector<std::string> codeFactory::codeGen(){
+std::vector<std::vector<bool> > codeFactory::codeGen(){
     T encoder(_probs);
     return encoder();
 }

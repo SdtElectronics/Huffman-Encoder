@@ -12,10 +12,10 @@ class parWdCounter{
 	public:
 		parWdCounter(const std::string& input);
 		
-		std::array<size_t, 256> operator () ();
+		std::array<size_t, 127> operator () ();
 	private:
 		const std::string& in;
-		//std::vector<std::array<size_t, 256>> slots;
-		std::array<size_t, 256> wdCnt(const std::string& input) const;
+		//std::vector<std::array<size_t, 127>> slots;
+		std::array<size_t, 127> wdCnt(const std::string& input) const;
 
 };
