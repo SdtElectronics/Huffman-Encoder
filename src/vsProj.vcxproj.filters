@@ -33,6 +33,12 @@
     <ClCompile Include="lib\parWdCnt.cxx">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\CODEC.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\HFD.cxx">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="version.h">
@@ -57,6 +63,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\cmdline\cmdline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\CODEC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\HFD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

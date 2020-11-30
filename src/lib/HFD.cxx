@@ -1,3 +1,9 @@
+/* 
+  Copyright (C) 2020 SdtElectronics <null@std.uestc.edu.cn>
+  All Rights Reserved.
+  Unauthorized copying of this file, via any medium is strictly prohibited.
+*/
+
 #include "HFD.h"
 
 HTNode::HTNode(bool notLeaf): _notLeaf(notLeaf){};

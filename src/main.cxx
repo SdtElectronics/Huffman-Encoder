@@ -26,6 +26,7 @@
 #include <array>
 #include <thread>
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include "cmdline/cmdline.h"
 #include "parRead.h"
@@ -35,6 +36,7 @@
 #include "llogger.h"
 #include "utils.h"
 #include "version.h"
+#include "CODEC.h"
 
 cmdline::parser cmd;
 
@@ -45,14 +47,32 @@ int main(int argc, char* argv[]){
     // 3rd argument is description
     // 4th argument is mandatory (optional. default is false)
     // 5th argument is default value  (optional. it used when mandatory is false)
-    cmd.add<std::string>("input", 'i', "input file", true);
-    cmd.add<int>("verbose", 'v', "log level", false, 3, cmdline::range(0, 4));
-    //cmd.add<std::string>("filter", 'f', "character filter", false, "\0,\177");
-    cmd.add<std::string>("filter", 'f', "character filter", false, "a,z; , ;A,Z");
+    cmd.add<std::string>("input", 'i', "input file", false, "");
+    cmd.add<std::string>("output", 'o', "out compressed file", false, "");
+    cmd.add<std::string>("dict", 'd', "dictionary file", false, "");
+    
+    cmd.add<int>("verbose", 'v', "log level", false, 3, cmdline::range(0, 5));
+    cmd.add<std::string>("filter", 'f', "character filter", false, "\1,\176");
+    cmd.add("version", 'V', "show version information");
+    //cmd.add<std::string>("filter", 'f', "character filter", false, "a,z; , ;A,Z");
+
 	cmd.parse_check(argc, argv);
 
-    parReader rd(cmd.get<std::string>("input"));
-    llogger logger(std::cout, static_cast<llogger::level>(cmd.get<int>("verbose")));
+	llogger logger(std::cout, static_cast<llogger::level>(cmd.get<int>("verbose")));
+
+    if (cmd.exist("version")){
+		std::cout<<info.c_str();
+
+        return 0;
+    }
+
+	std::string inP = cmd.get<std::string>("input");
+	if (inP.length() == 0) {
+		logger<<llogger::level::error<<"No input file specified";
+		return 1;
+	}
+    parReader rd(inP);
+    
 
     std::vector<std::string> filters = split(cmd.get<std::string>("filter"), ";");
     std::vector<std::array<char, 2> > cfFilt;
@@ -68,7 +88,7 @@ int main(int argc, char* argv[]){
 	}
 	std::cout << std::endl;
 	*/
-	const std::array<size_t, 256>& cCnt = parWdCounter(fileStr)();
+	const std::array<size_t, 127>& cCnt = parWdCounter(fileStr)();
 	/*
 	for(size_t j = 96; j != 122; ++j){	
 		std::cout<<static_cast<char>(j)<<':'<< cCnt[j]<<std::endl;
@@ -89,7 +109,7 @@ int main(int argc, char* argv[]){
         return logs.str();
     };
 
-    std::vector<std::string> codes = cf.codeGen<HFEnc>();
+    std::vector<std::vector<bool> > codes = cf.codeGen<HFEnc>();
 
     logger<<llogger::level::info<<[&cf, codes](){
         std::vector<char> alphabet = cf.alphabetGen();
@@ -97,9 +117,26 @@ int main(int argc, char* argv[]){
         logs<<"========Character encoding========\n";
         size_t ind = 0;
         for(char sym: alphabet){
-            logs<<sym<<' '<<codes[ind++]<<'\n';
+            logs<<sym<<' '<<codeFactory::printCode(codes[ind++])<<'\n';
         }
 		logs << '\n';
         return logs.str();
     };
+
+    std::string ofp = cmd.get<std::string>("output");
+    if(ofp.size() > 0){
+        std::ofstream outCompressed(ofp, std::ios_base::out);
+        encoder fenc(codeFactory::buildAlphabet(0, 127), std::vector<double>(cCnt.begin(), cCnt.end()));
+        fenc.writeCompressed(outCompressed, fileStr);
+		outCompressed.close();
+		std::string ofd = cmd.get<std::string>("dict"); 
+		if (ofd.size() > 0) {
+			std::ofstream outDict(ofd, std::ios_base::out);
+			fenc.writeDict(outDict);
+		}else{
+			logger<<llogger::level::warning<<"No dictionary output path specified.\n";
+		}
+
+    }
+        
 }

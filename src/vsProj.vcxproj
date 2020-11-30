@@ -71,6 +71,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)\..\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\..\$(Configuration)\</IntDir>
+    <TargetName>HuffmanEncoder</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -95,17 +98,21 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lib\CODEC.cxx" />
     <ClCompile Include="lib\codeFactory.cxx" />
+    <ClCompile Include="lib\HFD.cxx" />
     <ClCompile Include="lib\HTF.cxx" />
     <ClCompile Include="lib\llogger.cxx" />
     <ClCompile Include="lib\parRead.cxx" />
@@ -114,7 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\cmdline\cmdline.h" />
+    <ClInclude Include="lib\CODEC.h" />
     <ClInclude Include="lib\codeFactory.h" />
+    <ClInclude Include="lib\HFD.h" />
     <ClInclude Include="lib\HTF.h" />
     <ClInclude Include="lib\llogger.h" />
     <ClInclude Include="lib\parRead.h" />

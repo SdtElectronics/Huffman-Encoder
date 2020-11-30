@@ -6,7 +6,6 @@
 
 #include "parWdCnt.h"
 #include "omp.h"
-//#include <stdio.h>
 
 parWdCounter::parWdCounter(const std::string& input):
 	//slots(input.size(), std::array<char, 127>{}),
@@ -26,8 +25,6 @@ std::array<size_t, 127> parWdCounter::operator () (){
 	
 	//#pragma omp parallel for
 	for (size_t ind = 0; ind < in.length(); ++ind){
-        //printf("%c ", in[ind]);
-        //printf("%llu\n", static_cast<size_t>(in[ind]));
         ret[static_cast<size_t>(in[ind])]++;
     }
 	return ret;

@@ -25,4 +25,8 @@
 
 #include <string>
 
-const std::string copyright;
+const std::string copyright{"Copyright (C) 2020 SdtElectronics <null@std.uestc.edu.cn>\nNOTE:\nPart of the source files are *NOT* free to be copied or redistributed. Read copyright declaration in each file for details.\nOther files are opened under BSD 3-Clause License.\nThis project includes another open source project cmdline https://github.com/tanakh/cmdline . License is included under lib/cmdline/."};
+
+const std::string ver{"HuffmanEncoder v0.0.1 rc0\n2020/11/30"};
+
+const std::string info = copyright + ver;

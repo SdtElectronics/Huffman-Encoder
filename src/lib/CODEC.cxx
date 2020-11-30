@@ -1,7 +1,11 @@
+/* 
+  Copyright (C) 2020 SdtElectronics <null@std.uestc.edu.cn>
+  All Rights Reserved.
+  Unauthorized copying of this file, via any medium is strictly prohibited.
+*/
+
 #include "CODEC.h"
 #include <fstream>
-#include <iostream>
-#include <stdio.h>
 #include "codeFactory.h"
 #include "utils.h"
 
@@ -14,10 +18,8 @@ encoder::encoder(const std::vector<char>& syms,
     codes = enc();
     const auto cb = [this](int val, size_t selfInd, size_t parentInd){
         if(val == 0){
-            //printf("%d ", (this->zeroSeq)[parentInd]);
             (this->zeroSeq)[parentInd] = selfInd;
         }else{
-            //printf("%d ", (this->zeroSeq)[parentInd]);
             (this->oneSeq)[parentInd] = selfInd;
         }
     };
@@ -58,19 +60,11 @@ void encoder::binary_write(std::ostream& fout, const std::vector<bool>& x){
 void encoder::writeCompressed(std::ostream& os, const std::string& in){
     std::vector<bool> buf;
     for(char i: in){
-        //printf("%c", i);
         std::vector<bool> code = codes[static_cast<size_t>(i)];
-        
-        for(bool c: code){
-        std::cout<<c;
-        }
-        std::cout<<'\n';
-        
         buf.insert(buf.end(), code.begin(), code.end());
     }
     std::stringstream len;
     len<<buf.size()<<'\n';
-    //os<<len.str();
     
     binary_write(os, buf);
 }
